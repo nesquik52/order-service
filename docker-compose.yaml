@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: order_user
+      POSTGRES_PASSWORD: order_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  nats-streaming:
+    image: nats-streaming:0.25.2
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command: [
+      "--store", "file",
+      "--dir", "/data",
+      "--cluster_id", "test-cluster",
+      "--debug"
+    ]
+    volumes:
+      - nats_data:/data
+
+volumes:
+  postgres_data:
+  nats_data:
