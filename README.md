@@ -4,7 +4,7 @@
 
 ## 🎥 Демонстрация работы
 
-[![Demo Video](https://drive.google.com/file/d/1eDW5A7ShX4sErvBQeqaUmQlxfMxl3_Ch/view?usp=sharing)
+[![Demo Video](https://drive.google.com/file/d/1eDW5A7ShX4sErvBQeqaUmQlxfMxl3_Ch/view?usp=sharing)]
 
 ## Архитектура
 
@@ -33,10 +33,10 @@ go run cmd/publisher/main.go
 
 **4 шаг. Проверка работы**
 
-# JSON API
+**JSON API**
 curl "http://localhost:8080/order?id=b563feb7b2b84b6test"
 
-# Web интерфейс (откройте в браузере)
+**Web интерфейс (откройте в браузере)**
 http://localhost:8080
 
 
