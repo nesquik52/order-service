@@ -24,6 +24,8 @@ cd ~/order-service/order-service
 
 docker-compose up -d
 
+docker exec -i order-service-postgres-1 psql -U order_user -d orders < migrations/init.sql
+
 **2 шаг. Запуск сервера**
 
 go run cmd/server/main.go
