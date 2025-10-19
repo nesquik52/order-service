@@ -21,6 +21,7 @@ https://drive.google.com/file/d/1eDW5A7ShX4sErvBQeqaUmQlxfMxl3_Ch/view?usp=shari
 **1 шаг. Запуск инфраструктуры (Docker)**
 
 cd ~/order-service/order-service
+
 docker-compose up -d
 
 **2 шаг. Запуск сервера**
