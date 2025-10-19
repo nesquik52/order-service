@@ -66,10 +66,12 @@ nohup.out
 *.tar
 
 # Application binaries
-order-service
-publisher
-cmd/server/server
-cmd/publisher/publisher
+/*.exe
+/*.bin
+/order-service
+/publisher
+cmd/*/server
+cmd/*/publisher
 
 # Go module files (но go.mod и go.sum нужно коммитить!)
 # go.sum
