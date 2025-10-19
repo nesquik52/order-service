@@ -2,9 +2,9 @@
 
 Микросервис для обработки заказов с использованием NATS Streaming, PostgreSQL и in-memory кэша.
 
-## 🎥 Демонстрация работы
+## Демонстрация работы
 
-[![Demo Video](https://drive.google.com/file/d/1eDW5A7ShX4sErvBQeqaUmQlxfMxl3_Ch/view?usp=sharing)]
+https://drive.google.com/file/d/1eDW5A7ShX4sErvBQeqaUmQlxfMxl3_Ch/view?usp=sharing
 
 ## Архитектура
 
