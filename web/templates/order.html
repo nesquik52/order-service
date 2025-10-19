@@ -1,69 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Order {{.OrderUID}}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; }
-        .section h2 { margin-top: 0; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Service - Track Your Orders</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <h1>Order: {{.OrderUID}}</h1>
-    
-    <div class="section">
-        <h2>Order Information</h2>
-        <p><strong>Track Number:</strong> {{.TrackNumber}}</p>
-        <p><strong>Entry:</strong> {{.Entry}}</p>
-        <p><strong>Customer ID:</strong> {{.CustomerID}}</p>
-        <p><strong>Date Created:</strong> {{.DateCreated.Format "2006-01-02 15:04:05"}}</p>
+    <div class="container">
+        <div class="main-card">
+            <!-- Header -->
+            <div class="header-section">
+                <h1>Order Tracker</h1>
+                <p>Real-time order tracking and management system</p>
+            </div>
+
+            <!-- Content -->
+            <div class="content-section">
+                <!-- Search Section -->
+                <div class="search-section">
+                    <form id="searchForm" class="search-form">
+                        <input 
+                            type="text" 
+                            id="orderId" 
+                            class="search-input" 
+                            placeholder="Enter Order ID (e.g., b563feb7b2b84b6test)" 
+                            value=""
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="btn btn-primary">
+                            Search Order
+                        </button>
+                        <button type="button" id="testOrderBtn" class="btn btn-secondary">
+                            Test Order
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                <div id="resultSection" class="result-section"></div>
+
+                <!-- Instructions -->
+                <div class="instructions">
+                    <h3>How to use this system</h3>
+                    <p>1. Enter your Order ID in the search field above</p>
+                    <p>2. Click "Search Order" to retrieve detailed order information</p>
+                    <p>3. Use "Test Order" to see a sample order with all features</p>
+                    <p>4. View comprehensive details including delivery, payment, and items</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="section">
-        <h2>Delivery Information</h2>
-        <p><strong>Name:</strong> {{.Delivery.Name}}</p>
-        <p><strong>Phone:</strong> {{.Delivery.Phone}}</p>
-        <p><strong>Address:</strong> {{.Delivery.City}}, {{.Delivery.Address}}, {{.Delivery.Zip}}</p>
-        <p><strong>Region:</strong> {{.Delivery.Region}}</p>
-        <p><strong>Email:</strong> {{.Delivery.Email}}</p>
-    </div>
-
-    <div class="section">
-        <h2>Payment Information</h2>
-        <p><strong>Amount:</strong> ${{.Payment.Amount}}</p>
-        <p><strong>Currency:</strong> {{.Payment.Currency}}</p>
-        <p><strong>Provider:</strong> {{.Payment.Provider}}</p>
-        <p><strong>Bank:</strong> {{.Payment.Bank}}</p>
-    </div>
-
-    <div class="section">
-        <h2>Items</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Price</th>
-                    <th>Sale</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range .Items}}
-                <tr>
-                    <td>{{.Name}}</td>
-                    <td>{{.Brand}}</td>
-                    <td>${{.Price}}</td>
-                    <td>{{.Sale}}%</td>
-                    <td>${{.TotalPrice}}</td>
-                    <td>{{.Status}}</td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
-    </div>
+    <script src="/static/js/app.js"></script>
 </body>
 </html>

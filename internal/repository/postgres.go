@@ -38,7 +38,6 @@ func (r *PostgresRepository) CreateOrder(ctx context.Context, order *model.Order
 	}
 	defer tx.Rollback()
 
-	// Вставка основного заказа
 	_, err = tx.ExecContext(ctx, `
 		INSERT INTO orders (order_uid, track_number, entry, locale, internal_signature, 
 		                   customer_id, delivery_service, shardkey, sm_id, date_created, oof_shard)
@@ -49,7 +48,6 @@ func (r *PostgresRepository) CreateOrder(ctx context.Context, order *model.Order
 		return err
 	}
 
-	// Вставка доставки
 	_, err = tx.ExecContext(ctx, `
 		INSERT INTO delivery (order_uid, name, phone, zip, city, address, region, email)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -59,7 +57,6 @@ func (r *PostgresRepository) CreateOrder(ctx context.Context, order *model.Order
 		return err
 	}
 
-	// Вставка платежа
 	_, err = tx.ExecContext(ctx, `
 		INSERT INTO payment (order_uid, transaction, request_id, currency, provider, 
 		                   amount, payment_dt, bank, delivery_cost, goods_total, custom_fee)
@@ -71,7 +68,6 @@ func (r *PostgresRepository) CreateOrder(ctx context.Context, order *model.Order
 		return err
 	}
 
-	// Вставка товаров
 	for _, item := range order.Items {
 		_, err = tx.ExecContext(ctx, `
 			INSERT INTO items (order_uid, chrt_id, track_number, price, rid, name, 
@@ -90,7 +86,6 @@ func (r *PostgresRepository) CreateOrder(ctx context.Context, order *model.Order
 func (r *PostgresRepository) GetOrderByUID(ctx context.Context, orderUID string) (*model.Order, error) {
 	var order model.Order
 	
-	// Получение основного заказа
 	err := r.db.QueryRowContext(ctx, `
 		SELECT order_uid, track_number, entry, locale, internal_signature, 
 		       customer_id, delivery_service, shardkey, sm_id, date_created, oof_shard
@@ -103,7 +98,6 @@ func (r *PostgresRepository) GetOrderByUID(ctx context.Context, orderUID string)
 		return nil, err
 	}
 
-	// Получение доставки
 	err = r.db.QueryRowContext(ctx, `
 		SELECT name, phone, zip, city, address, region, email
 		FROM delivery WHERE order_uid = $1
@@ -115,7 +109,6 @@ func (r *PostgresRepository) GetOrderByUID(ctx context.Context, orderUID string)
 		return nil, err
 	}
 
-	// Получение платежа
 	err = r.db.QueryRowContext(ctx, `
 		SELECT transaction, request_id, currency, provider, amount, payment_dt, 
 		       bank, delivery_cost, goods_total, custom_fee
@@ -129,7 +122,6 @@ func (r *PostgresRepository) GetOrderByUID(ctx context.Context, orderUID string)
 		return nil, err
 	}
 
-	// Получение товаров
 	rows, err := r.db.QueryContext(ctx, `
 		SELECT chrt_id, track_number, price, rid, name, sale, size, total_price, nm_id, brand, status
 		FROM items WHERE order_uid = $1

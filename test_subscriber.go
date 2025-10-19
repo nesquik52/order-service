@@ -15,16 +15,15 @@ func main() {
 	}
 	defer sc.Close()
 
-	fmt.Println("✅ Listening for messages on 'orders' channel...")
+	fmt.Println("Listening for messages on 'orders' channel...")
 
 	_, err = sc.Subscribe("orders", func(msg *stan.Msg) {
-		fmt.Printf("✅ Received message: %s\n", string(msg.Data))
+		fmt.Printf("Received message: %s\n", string(msg.Data))
 	})
 	if err != nil {
 		log.Fatal("Subscribe failed:", err)
 	}
 
-	// Ждем сообщений
 	time.Sleep(30 * time.Second)
 	fmt.Println("Timeout reached")
 }

@@ -11,7 +11,6 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-// Mock репозитория
 type MockRepository struct {
 	mock.Mock
 }
@@ -48,7 +47,6 @@ func TestOrderValidation(t *testing.T) {
 	err := order.Validate()
 	assert.NoError(t, err)
 
-	// Тест невалидного заказа
 	invalidOrder := &model.Order{}
 	err = invalidOrder.Validate()
 	assert.Error(t, err)

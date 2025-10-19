@@ -1,4 +1,3 @@
--- Основная таблица заказов
 CREATE TABLE orders (
     order_uid VARCHAR(255) PRIMARY KEY,
     track_number VARCHAR(255) NOT NULL,
@@ -13,7 +12,6 @@ CREATE TABLE orders (
     oof_shard VARCHAR(10) NOT NULL
 );
 
--- Таблица доставки
 CREATE TABLE delivery (
     order_uid VARCHAR(255) PRIMARY KEY REFERENCES orders(order_uid) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
@@ -25,7 +23,6 @@ CREATE TABLE delivery (
     email VARCHAR(255) NOT NULL
 );
 
--- Таблица платежей
 CREATE TABLE payment (
     order_uid VARCHAR(255) PRIMARY KEY REFERENCES orders(order_uid) ON DELETE CASCADE,
     transaction VARCHAR(255) NOT NULL,
@@ -40,7 +37,6 @@ CREATE TABLE payment (
     custom_fee INTEGER NOT NULL
 );
 
--- Таблица товаров
 CREATE TABLE items (
     id SERIAL PRIMARY KEY,
     order_uid VARCHAR(255) REFERENCES orders(order_uid) ON DELETE CASCADE,
@@ -57,6 +53,5 @@ CREATE TABLE items (
     status INTEGER NOT NULL
 );
 
--- Индексы для ускорения поиска
 CREATE INDEX idx_orders_order_uid ON orders(order_uid);
 CREATE INDEX idx_items_order_uid ON items(order_uid);

@@ -18,7 +18,7 @@ type NatsSubscriber struct {
 }
 
 type Cache struct {
-	Orders map[string]interface{} // Сделали публичным
+	Orders map[string]interface{}
 }
 
 func NewNatsSubscriber(repo repository.OrderRepository, cache *Cache, cluster, client string) *NatsSubscriber {
@@ -39,26 +39,22 @@ func (ns *NatsSubscriber) Subscribe(channel string) error {
 	_, err = sc.Subscribe(channel, func(msg *stan.Msg) {
 		var order model.Order
 		
-		// Валидация JSON
 		if err := json.Unmarshal(msg.Data, &order); err != nil {
 			log.Printf("Invalid JSON received: %v", err)
 			return
 		}
 
-		// Валидация данных заказа
 		if err := order.Validate(); err != nil {
 			log.Printf("Invalid order data: %v", err)
 			return
 		}
 
-		// Сохранение в БД
 		ctx := context.Background()
 		if err := ns.repo.CreateOrder(ctx, &order); err != nil {
 			log.Printf("Failed to save order to DB: %v", err)
 			return
 		}
 
-		// Сохранение в кэш
 		ns.cache.Orders[order.OrderUID] = &order
 		
 		log.Printf("Order %s processed successfully", order.OrderUID)
